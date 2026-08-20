@@ -3,8 +3,8 @@ from google.protobuf.descriptor_pb2 import (
     DescriptorProto,
     FieldDescriptorProto,
 )
-from google.protobuf.internal.containers import RepeatedScalarFieldContainer
 from collections import OrderedDict
+from collections.abc import Sequence
 from itertools import groupby
 
 """
@@ -129,7 +129,7 @@ def fmt_value(val, options=None, desc=None, optarr=[]):
         if isinstance(val, bool):
             val = str(val).lower()
         elif desc and desc.type == FieldDescriptorProto.TYPE_ENUM:
-            if isinstance(val, (list, RepeatedScalarFieldContainer)):
+            if isinstance(val, Sequence):
                 val = ', '.join(
                     desc.enum_type.values_by_number[v].name for v in val
                 )
